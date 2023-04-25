@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Exercise Recommender</title>
+    <style>
+  * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="number"],
+      select {
+        padding: 5px;
+        width: 100%;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0069d9;
+      }
+
+      #recommendations {
+        margin-top: 20px;
+      }
+
+      #recommendations table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #recommendations th,
+      #recommendations td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ccc;
+      }
+
+      #recommendations th {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      #recommendations tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Exercise Recommender</h1>
+      <form id="exercise-form">
+        <div class="form-group">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age" required>
+        </div>
+        <div class="form-group">
+          <label for="weight">Weight (kg):</label>
+          <input type="number" step="0.01" id="weight" name="weight" required>
+        </div>
+        <div class="form-group">
+          <label for="height">Height (cm):</label>
+          <input type="number" step="0.01" id="height" name="height" required>
+        </div>
+        <div class="form-group">
+          <label for="calories">Calories you want to burn per Minute:</label>
+          <input type="number" id="calories" name="calories" required>
+        </div>
+        <button type="submit">Get Recommendations</button>
+      </form>
+      <div id="recommendations"></div>
+    </div>
+    <script>
+const form = document.querySelector('#exercise-form');
+const recommendations = document.querySelector('#recommendations');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(form);
+  const response = await fetch('/recommend', {
+    method: 'POST',
+    body: formData
+  });
+
+  const data = await response.json();
+
+  // Clear previous recommendations
+  recommendations.innerHTML = '';
+
+  // Display new recommendations
+  data.forEach((item) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    const name = document.createElement('h3');
+    name.textContent = item['EXERCISE_NAME'];
+    card.appendChild(name);
+
+    const sets = document.createElement('p');
+    sets.textContent = 'Sets: ' + item['TOTAL_SET'];
+    card.appendChild(sets);
+
+    const repetitions = document.createElement('p');
+    repetitions.textContent = 'Repetitions: ' + item['REPETITIONS'];
+    card.appendChild(repetitions);
+
+    const calories = document.createElement('p');
+    calories.textContent = 'Calories burn per minute: ' + item['CALORIES_PR_MIN'];
+    card.appendChild(calories);
+
+    recommendations.appendChild(card);
+  });
+});
+</script>
+  </body>
+</html>

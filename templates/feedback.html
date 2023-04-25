@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////
+              START SECTION  - GET STARTED
+/////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<div>
+  <br>
+  <br>
+  <br>
+</div>
+<section id="contact" class="get-started">
+  <div class="container">
+    <div class="row text-center">
+
+      <h1 class="display-3 fw-bold text-capitalize">Feedbacks</h1>
+      <div class="heading-line"></div>
+      <p class="lh-lg">
+        we love to get your feedbacks.
+      </p>
+    </div>
+
+    <!-- START THE CONTENT  -->
+    <div class="row text-white">
+      <div class="col-12 col-lg-6 gradient shadow p-3">
+        <div class="cta-info w-100">
+          <h4 class="display-4 fw-bold">Feedback is the breakfast of champions.</h4>
+          <p class="lh-lg">
+            We value your feedback and suggestions at our dietician web application.
+            Our team is committed to providing the best possible service to help you achieve your nutritional goals, and we rely on your input to continually improve our platform.
+            If you have any questions, concerns, or feedback, please do not hesitate to contact us.
+            We appreciate your support and look forward to hearing from you.
+          </p>
+
+        </div>
+      </div>
+      <div class="col-12 col-lg-6 bg-white shadow p-3">
+        <div class="form w-100 pb-2">
+          <h4 class="display-3--title mb-5">Fill the feedback form here</h4>
+          <form action="/feedback" method="POST" class="row" >
+            <div class="col-lg-6 col-md mb-3">
+              <input type="text" placeholder="First Name" id="inputFirstName" name = "first_name" required class="shadow form-control form-control-lg">
+            </div>
+            <div class="col-lg-6 col-md mb-3">
+              <input type="text" placeholder="Last Name" id="inputLastName" name = "last_name" required class="shadow form-control form-control-lg">
+            </div>
+            <div class="col-lg-12 mb-3">
+              <input type="email" placeholder="email address" id="inputEmail" name = "email" required class="shadow form-control form-control-lg">
+            </div>
+            <div class="col-lg-12 mb-3">
+              <textarea placeholder="message" id="message" name = "message" required rows="8" class="shadow form-control form-control-lg"></textarea>
+            </div>
+            <div class="text-center d-grid mt-1">
+              <button type="submit" class="btn btn-primary rounded-pill pt-3 pb-3">
+                submit
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+

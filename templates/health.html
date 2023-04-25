@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculate Health Metrics</title>
+	<style>
+		body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 50px;
+}
+
+form {
+	max-width: 500px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+label {
+	display: block;
+	margin-top: 10px;
+}
+
+input[type="number"], select {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+button[type="submit"] {
+	display: block;
+	margin: 20px auto 0;
+	padding: 10px 20px;
+	background-color: #008CBA;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+button[type="submit"]:hover {
+	background-color: #006080;
+}
+
+#results {
+	max-width: 500px;
+	margin: 50px auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 2px 5px rgba
+
+	</style>
+</head>
+<body>
+	<h1>Calculate Health Metrics</h1>
+	<form id="health-form">
+		<label for="gender">Gender:</label>
+		<select name="gender" id="gender" required>
+			<option value="" disabled selected>Select your gender</option>
+			<option value="0">Male</option>
+			<option value="1">Female</option>
+		</select>
+
+		<label for="weight">Weight (in kg):</label>
+		<input type="number" name="weight" id="weight" required>
+
+		<label for="height">Height (in cm):</label>
+		<input type="number" name="height" id="height" required>
+
+		<label for="age">Age:</label>
+		<input type="number" name="age" id="age" required>
+
+		<label for="activity_level">Activity Level:</label>
+		<select name="activity_level" id="activity_level" required>
+			<option value="" disabled selected>Select your activity level</option>
+			<option value="1">Sedentary</option>
+			<option value="2">Lightly Active</option>
+			<option value="3">Moderately Active</option>
+			<option value="4">Very Active</option>
+			<option value="5">Extremely Active</option>
+		</select>
+
+		<label for="waist">Waist Circumference (in cm):</label>
+		<input type="number" name="waist" id="waist" required>
+
+		<label for="neck">Neck Circumference (in cm):</label>
+		<input type="number" name="neck" id="neck" required>
+
+		<button type="submit">Calculate</button>
+	</form>
+
+	<div id="results"></div>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+<script>
+	const form = document.querySelector('form');
+  const results = document.querySelector('#results');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+    fetch('/reports', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: json
+    })
+      .then(response => response.json())
+      .then(data => {
+        results.innerHTML = `
+          <h2>Results:</h2>
+          <p>DCB: ${data.DCN}</p>
+          <p>BMR: ${data.BMR}</p>
+          <p>BFP: ${data.BFP}</p>
+        `;
+      })
+      .catch(error => console.error(error));
+  });
+</script>
+</html>

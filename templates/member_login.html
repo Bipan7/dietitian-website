@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+			background-color: #f0f0f0;
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+			margin: 0 auto;
+			max-width: 400px;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.3);
+			text-align: center;
+		}
+
+		h1 {
+			margin-top: 0;
+		}
+
+		input[type="email"], input[type="password"] {
+			padding: 10px;
+			margin: 10px 0;
+			border: none;
+			border-radius: 5px;
+			background-color: #f0f0f0;
+			width: 100%;
+			box-sizing: border-box;
+			font-size: 16px;
+		}
+
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #3e8e41;
+		}
+    </style>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Login</h1>
+        <form method="POST" action="{{ url_for('auth') }}">
+            <input type="email" placeholder="Email" name = 'email' required>
+			<input type="password" placeholder="Password" name = 'password' required>
+			<button type="submit">
+                Login
+                <i class="fas fa-paper-plane"></i>
+			</button>
+		</form>
+	</div>
+</body>
+</html>

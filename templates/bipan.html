@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Interactive Login Page</title>
+    <style>
+        .login-container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 30px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-container h2 {
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.login-container input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+}
+
+.login-container button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.login-container button:hover {
+  background-color: #3e8e41;
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+  z-index: 999;
+}
+
+.loading.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.loading-text {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  border-top-color: #4CAF50;
+  animation: spinner 0.8s linear infinite;
+}
+
+.error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility:
+  hidden;
+transition: all 0.3s ease-in-out;
+z-index: 999;
+}
+
+.error.active {
+opacity: 1;
+visibility: visible;
+}
+
+.error-text {
+font-size: 24px;
+font-weight: bold;
+margin-right: 20px;
+}
+
+.error-btn {
+padding: 10px;
+border: none;
+border-radius: 5px;
+background-color: #4CAF50;
+color: #fff;
+cursor: pointer;
+transition: all 0.3s ease-in-out;
+}
+
+.error-btn:hover {
+background-color: #3e8e41;
+}
+
+@keyframes spinner {
+to {
+transform: rotate(360deg);
+}
+}
+    </style>
+      <script>
+
+const form = document.querySelector('form');
+const submitBtn = document.querySelector('#submit-btn');
+const loading = document.querySelector('.loading');
+const error = document.querySelector('.error');
+const errorBtn = document.querySelector('.error-btn');
+
+submitBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  loading.classList.add('active');
+  setTimeout(() => {
+    const username = form.username.value;
+    const password = form.password.value;
+    if (username === 'admin' && password === 'password') {
+      window.location.href = 'dashboard.html';
+    } else {
+      loading.classList.remove('active');
+      error.classList.add('active');
+    }
+  }, 2000);
+});
+
+errorBtn.addEventListener('click', () => {
+  error.classList.remove('active');
+  form.username.value = '';
+  form.password.value = '';
+  submitBtn.disabled = true;
+});
+
+form.addEventListener('input', () => {
+  const username = form.username.value;
+  const password = form.password.value;
+  if (username.length > 0 && password.length > 0) {
+    submitBtn.disabled = false;
+  } else {
+    submitBtn.disabled = true;
+  }
+});
+
+      </script>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button type="submit" id="submit-btn" disabled>Submit</button>
+      </form>
+      <div class="loading">
+        <div class="loading-text">Loading...</div>
+        <div class="loading-spinner"></div>
+      </div>
+      <div class="error">
+        <div class="error-text">Invalid username or password.</div>
+        <button class="error-btn">OK</button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.buttons {
+    margin: 10%;
+    text-align: center;
+}
+
+.btn-hover {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.btn-hover:focus {
+    outline: none;
+}
+
+.btn-hover.color-1 {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+.btn-hover.color-2 {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+}
+.btn-hover.color-3 {
+    background-image: linear-gradient(to right, #667eea, #764ba2, #6B8DD6, #8E37D7);
+    box-shadow: 0 4px 15px 0 rgba(116, 79, 168, 0.75);
+}
+.btn-hover.color-4 {
+    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+}
+.btn-hover.color-5 {
+    background-image: linear-gradient(to right, #0ba360, #3cba92, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(23, 168, 108, 0.75);
+}
+.btn-hover.color-6 {
+    background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+    box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+}
+.btn-hover.color-7 {
+    background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
+    box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+}
+.btn-hover.color-8 {
+    background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+.btn-hover.color-9 {
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+.btn-hover.color-10 {
+        background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+    box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+.btn-hover.color-11 {
+       background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);  box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+}
+
+<div class="buttons">
+    <button class="btn-hover color-1">BUTTON</button>
+    <button class="btn-hover color-2">BUTTON</button>
+    <button class="btn-hover color-3">BUTTON</button>
+    <button class="btn-hover color-4">BUTTON</button>
+    <button class="btn-hover color-5">BUTTON</button>
+    <button class="btn-hover color-6">BUTTON</button>
+    <button class="btn-hover color-7">BUTTON</button>
+    <button class="btn-hover color-8">BUTTON</button>
+    <button class="btn-hover color-9">BUTTON</button>
+    <button class="btn-hover color-10">BUTTON</button>
+    <button class="btn-hover color-11">BUTTON</button>
+</div>

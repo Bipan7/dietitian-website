@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diet Plan Recommender</title>
+    <style>
+        * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="number"],
+      select {
+        padding: 5px;
+        width: 100%;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0069d9;
+      }
+
+      #recommendations {
+        margin-top: 20px;
+      }
+
+      #recommendations table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #recommendations th,
+      #recommendations td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ccc;
+      }
+
+      #recommendations th {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      #recommendations tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Diet Plan Recommender</h1>
+    <form id="diet-form">
+        <label for="gender">Gender:</label>
+        <select name="gender" id="gender">
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+        </select>
+        <label for="weight">Weight (in kg):</label>
+        <input type="number" name="weight" id="weight" min="50" max="150" required>
+        <label for="height">Height (in cm):</label>
+        <input type="number" name="height" id="height" min="150" max="200" required>
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" min="18" max="50" required>
+        <label for="activity-level">Activity Level:</label>
+        <select name="activity-level" id="activity-level">
+            <option value="1">Sedentary</option>
+            <option value="2">Lightly Active</option>
+            <option value="3">Moderately Active</option>
+            <option value="4">Very Active</option>
+            <option value="5">Extra Active</option>
+        </select>
+        <button type="submit" id="submit-btn">Get Diet Plan</button>
+    </form>
+    <div id="diet-plan" class="diet-plan"></div>
+</div>
+
+<script>
+    const form = document.querySelector('#diet-form');
+    const submitBtn = document.querySelector('#submit-btn');
+    const dietPlanContainer = document.querySelector('#diet-plan');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const gender = formData.get('gender');
+        const weight = formData.get('weight');
+        const height = formData.get('height');
+        const age = formData.get('age');
+        const activityLevel = formData.get('activity-level');
+
+        fetch(`/diet?gender=${gender}&weight=${weight}&height=${height}&age=${age}&activity_level=${activityLevel}`)
+            .then(response => response.json())
+            .then(data => {
+                const { calories, protein, carbohydrates, fat, breakfast, lunch, dinner } = data;
+                let html = `
+                    <h3>Your Recommended Diet Plan:</h3>
+                    <ul>
+                        <li>Calories: ${calories.toFixed(2)}</li>
+                        <li>Protein: ${protein.toFixed(2)}g</li>
+                        <li>Carbohydrates: ${carbohydrates.toFixed(2)}g</li>
+                        <li>Fat: ${fat.toFixed(2)}g</li>
+                    </ul>
+                    <h4>Breakfast:</h4>
+                    <ul>
+                `;
+                breakfast.forEach(item => {
+                    html += `<li>${item.name} (${item.calories} calories)</li>`;
+                });
+                html += `
+                    </ul>
+                    <h4>Lunch:</h4>
+                    <ul>
+                `;
+                lunch.forEach(item => {
+                    html += `<li>${item.name} (${item.calories} calories)</li>`;
+                });
+                html += `
+                    </ul>
+                    <h4>Dinner:</h4>
+                    <ul>
+                `;
+                dinner.forEach(item => {
+                    html += `<li>${item.name} (${item.calories} calories)</li>`;
+                });
+                html += `</ul>`;
+                dietPlanContainer.innerHTML = html;
+            })
+            .catch(error => console.log(error));
+    });
+</script>
+
+<!--
+<script>
+    const form = document.querySelector('#diet-form');
+const submitBtn = document.querySelector('#submit-btn');
+const dietPlanContainer = document.querySelector('#diet-plan');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const gender = formData.get('gender');
+    const weight = formData.get('weight');
+    const height = formData.get('height');
+    const age = formData.get('age');
+    const activityLevel = formData.get('activity-level');
+
+    fetch(`/diet?gender=${gender}&weight=${weight}&height=${height}&age=${age}&activity_level=${activityLevel}`)
+        .then(response => response.json())
+        .then(data => {
+            let html = `
+                <h3>Your Recommended Diet Plan:</h3>
+                <ul>
+                    <li>Calories: ${data.calories.toFixed(2)}</li>
+                    <li>Protein: ${data.protein.toFixed(2)}g</li>
+                    <li>Carbohydrates: ${data.carbohydrates.toFixed(2)}g</li>
+                    <li>Fat: ${data.fat.toFixed(2)}g</li>
+                </ul>
+                <h4>Breakfast:</h4>
+                <ul>
+            `;
+            data.breakfast.forEach(item => {
+                html += `<li>${item.name} (${item.calories} calories)</li>`;
+            });
+            html += `
+                </ul>
+                <h4>Lunch:</h4>
+                <ul>
+            `;
+            data.lunch.forEach(item => {
+                html += `<li>${item.name} (${item.calories} calories)</li>`;
+            });
+            html += `
+                </ul>
+                <h4>Dinner:</h4>
+                <ul>
+            `;
+            data.dinner.forEach(item => {
+                html += `<li>${item.name} (${item.calories} calories)</li>`;
+            });
+            html += `</ul>`;
+            dietPlanContainer.innerHTML = html;
+        })
+        .catch(error => console.log(error));
+});
+
+</script>
+-->
+</body>
+</html>

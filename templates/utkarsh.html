@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <link href="https://getbootstrap.com/docs/3.4/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+<style>
+.img-user{
+    width:350px;
+    height:200px;
+}
+
+.jumbotron label {
+    font-size:12px;
+}
+
+.reg-icon{
+    color:#5bc0de;
+    font-weight:bold;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    color: #fff;
+    background-color: #5bc0de;
+}
+
+.prj-name{
+    font-weight:bold;
+    color:#5bc0de;
+}
+</style>
+<div class="container bootstrap snippets bootdey">
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li ><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">Home</a></li>
+      <li ><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">Register</a></li>
+      <li class="active"><a href="http://getbootstrap.com/examples/jumbotron-narrow/#">Sign in</a></li>
+    </ul>
+    <h3 class="text-muted prj-name">Project name</h3>
+  </div>
+
+  <div class="jumbotron" style="height:auto;min-height:300px;">
+    <div class="col-md-4">
+       <img src="https://bootdey.com/img/Content/Manbrown2.png" class="img-responsive center-block img-user">
+    </div>
+    <div class="col-md-6 form-content">
+        <form class="form-horizontal" role="form">
+            <div class="form-group text-center">
+                <div class="col-sm-10 reg-icon">
+                    <span class="fa fa-user fa-2x">Sign in</span>
+                </div>
+            </div>
+              <div class="form-group">
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="Username" placeholder="Username">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-info">
+                    <span class="glyphicon glyphicon-share-alt"></span>
+                    Sing in
+                  </button>
+                </div>
+              </div>
+        </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
