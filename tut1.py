@@ -141,7 +141,7 @@ def feedback():
     return render_template('feedback.html')
 
 
-@app.route('/logout')
+@app.route('/logout') #admin logout
 def logout():
     if "username" in session and session['username'] == 'bipan':
         session.pop("username")
@@ -335,6 +335,7 @@ def recommend_diet_plan(gender, weight, height, age, activity_level):
 
 @app.route('/diet')
 def diet():
+    random.seed(1)
     # generating random values
     gender = random.randint(0, 1)
     weight = random.randint(50, 150)
